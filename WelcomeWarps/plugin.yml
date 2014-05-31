@@ -1,0 +1,26 @@
+name: WelcomeWarpSigns
+main: com.wasteofplastic.welcomewarpsigns.WelcomeWarpSigns
+version: 1.0
+description: Easy to use warp signs for players
+author: Tastybento
+commands:
+    wwarp:
+       description: Admin Command for Warp Signs
+       aliases: wwarps
+       usage:  |
+             /wwarp to list warps /wwarp <name> to warp 
+    wwadmin:
+        description: Admin Command for Warp Signs
+        aliases: wadmin
+        usage:  |
+             /wadmin to list help
+permissions:    
+  welcomewarpsigns.add:
+     description: Permission to add warp signs
+     default: true
+  welcomewarpsigns.use:
+     description: Permission to use welcome warp signs
+     default: true
+  welcomewarpsigns.admin:
+     description: Permission to admin warp signs
+     default: op
