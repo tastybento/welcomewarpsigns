@@ -1,14 +1,14 @@
 name: WelcomeWarpSigns
-main: com.wasteofplastic.welcomewarpsigns.WelcomeWarpSigns
-version: 1.0
+main: com.wasteofplastic.wwarps.WWarps
+version: 1.1
 description: Easy to use warp signs for players
-author: Tastybento
+author: tastybento
 commands:
     wwarp:
-       description: Admin Command for Warp Signs
+       description: Show Welcome Warp Signs
        aliases: wwarps
        usage:  |
-             /wwarp to list warps /wwarp <name> to warp 
+             /wwarp to list warps, /wwarp <name> to warp 
     wwadmin:
         description: Admin Command for Warp Signs
         aliases: wadmin

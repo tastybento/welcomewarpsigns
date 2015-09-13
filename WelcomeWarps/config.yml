@@ -1,3 +1,6 @@
+# Use the GUI warp panel, if false, warps will be listed as text
+usewarppanel: true
+
 # Sign worlds - a list of worlds where Welcome Warp Signs work. If this is blank, then they will work in all worlds. Worlds must be correctly capitalized.
 # Example -
 # signworlds:
