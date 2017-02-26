@@ -1,6 +1,6 @@
 name: WelcomeWarpSigns
 main: com.wasteofplastic.wwarps.WWarps
-version: 1.1
+version: ${version}
 description: Easy to use warp signs for players
 author: tastybento
 commands:

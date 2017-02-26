@@ -74,7 +74,9 @@ public class WarpPanel implements Listener {
                 ItemStack playerSkull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
                 if (headCache.containsKey(playerUUID)) {
                     playerSkull = headCache.get(playerUUID);
+                    //plugin.getLogger().info("DEBUG: Head found in cache");
                 } else {
+                    //plugin.getLogger().info("DEBUG: Head not found in cache");
                     SkullMeta meta = (SkullMeta) playerSkull.getItemMeta();
                     meta.setOwner(playerName);
                     meta.setDisplayName(playerName);
