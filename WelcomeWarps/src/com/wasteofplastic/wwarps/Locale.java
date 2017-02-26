@@ -37,13 +37,11 @@ public class Locale {
     private File localeFile = null;
     private WWarps plugin;
 
-    // Errors
     public String errorUnknownPlayer;
     public String errorNoPermission;
     public String errorCommandNotReady;
     public String errorOfflinePlayer;
     public String errorUnknownCommand;
-    // WarpSigns
     public String warpswelcomeLine;
     public String warpswarpTip;
     public String warpssuccess;
@@ -57,49 +55,21 @@ public class Locale {
     public String warpserrorDoesNotExist;
     public String warpserrorNotReadyYet;
     public String warpserrorNotSafe;
-    // island warp help
     public String warpswarpToPlayersSign;
     public String warpserrorNoWarpsYet;
     public String warpswarpsAvailable;
     public String warpsPlayerWarped;
-
-    public String islanderrorYouDoNotHavePermission;
-
-    // /island warps;
-    public String islandhelpWarps;
-    // /island warp <player>
-    public String islandhelpWarp;
-    public String islanderrorInvalidPlayer;
-    
-    
-    
-
-    // ////////////////////////////////////
-    // /island commands //
-    // ////////////////////////////////////
-
-    
-
-    
-
-    // //////////////////////////////////////////////////////////////
-    // Admin commands that use /acid //
-    // //////////////////////////////////////////////////////////////
-
-    // acid reload
+    public String errorerrorYouDoNotHavePermission;
+    public String warphelpWarps;
+    public String warphelpWarp;
+    public String errorerrorInvalidPlayer;
     public String reloadconfigReloaded;
     public String errorWrongWorld;
-    public String prefix;
     public String helpColor;
     public String warpsPrevious;
     public String warpsNext;
     public String warpsTitle;
     public String errorUseInGame;
-    public String adminHelpResetSign;
-    public String adminResetSignNoSign;
-    public String adminResetSignFound;
-    public String adminResetSignRescued;
-    public String adminResetSignErrorExists;
     public String newsHeadline;
     public String adminHelpreload;
     public String adminHelpHelp;
@@ -172,7 +142,6 @@ public class Locale {
     public void loadLocale() {
 	// Localization Locale Setting
 	// Command prefix - can be added to the beginning of any message
-	prefix = ChatColor.translateAlternateColorCodes('&', ChatColor.translateAlternateColorCodes('&', locale.getString("prefix", "")));
 	errorUnknownPlayer = ChatColor.translateAlternateColorCodes('&', locale.getString("error.unknownPlayer", "That player is unknown."));
 	errorNoPermission = ChatColor.translateAlternateColorCodes('&',
 		locale.getString("error.noPermission", "You don't have permission to use that command!"));
@@ -212,22 +181,17 @@ public class Locale {
 	warpsPrevious = ChatColor.translateAlternateColorCodes('&', locale.getString("warps.previous", "Previous"));
 	warpsNext = ChatColor.translateAlternateColorCodes('&', locale.getString("warps.next", "Next"));
 	warpsTitle = ChatColor.translateAlternateColorCodes('&', locale.getString("warps.title", "Island warps"));
-	islanderrorYouDoNotHavePermission = ChatColor.translateAlternateColorCodes('&',
-		locale.getString("island.errorYouDoNotHavePermission", "You do not have permission to use that command!"));
-	islandhelpWarps = ChatColor.translateAlternateColorCodes('&', locale.getString("island.helpWarps", "Lists all available welcome-sign warps."));
-	islandhelpWarp = ChatColor.translateAlternateColorCodes('&', locale.getString("island.helpWarp", "Warp to <player>'s welcome sign."));
-	islanderrorInvalidPlayer = ChatColor.translateAlternateColorCodes('&',
+	errorerrorYouDoNotHavePermission = ChatColor.translateAlternateColorCodes('&',
+		locale.getString("error.errorYouDoNotHavePermission", "You do not have permission to use that command!"));
+	warphelpWarps = ChatColor.translateAlternateColorCodes('&', locale.getString("warp.helpWarps", "Lists all available welcome-sign warps."));
+	warphelpWarp = ChatColor.translateAlternateColorCodes('&', locale.getString("warp.helpWarp", "Warp to <player>'s welcome sign."));
+	errorerrorInvalidPlayer = ChatColor.translateAlternateColorCodes('&',
 		locale.getString("island.errorInvalidPlayer", "That player is invalid or does not have an island!"));
 	reloadconfigReloaded = ChatColor.translateAlternateColorCodes('&',
 		locale.getString("reload.configReloaded", "Configuration reloaded from file."));
-	helpColor = ChatColor.translateAlternateColorCodes('&', locale.getString("island.helpColor", "&e"));
+	helpColor = ChatColor.translateAlternateColorCodes('&', locale.getString("warp.helpColor", "&e"));
 	errorUseInGame = ChatColor.translateAlternateColorCodes('&', locale.getString("error.useInGame", "This command must be used in-game."));
-	adminHelpResetSign = ChatColor.translateAlternateColorCodes('&', locale.getString("adminHelp.resetSign", "Resets the sign you are looking at to the island owner"));
-	adminHelpHelp = ChatColor.translateAlternateColorCodes('&', locale.getString("adminHelp.help", "Admin Help"));
+	adminHelpHelp = ChatColor.translateAlternateColorCodes('&', locale.getString("adminHelp.help", "Warp Sign Admin"));
 	adminHelpreload = ChatColor.translateAlternateColorCodes('&', locale.getString("adminHelp.reload", "reload plugin settings"));
-	adminResetSignNoSign = ChatColor.translateAlternateColorCodes('&', locale.getString("adminResetSign.noSign", "You must be looking at a sign post to run this command."));
-	adminResetSignFound = ChatColor.translateAlternateColorCodes('&', locale.getString("adminResetSign.found", "Warp Sign found!"));
-	adminResetSignRescued = ChatColor.translateAlternateColorCodes('&', locale.getString("adminResetSign.rescued", "Warp sign rescued and assigned to [name]"));
-	adminResetSignErrorExists = ChatColor.translateAlternateColorCodes('&', locale.getString("adminResetSign.errorExists", "That warp sign is already active and owned by [name]"));
     }
 }

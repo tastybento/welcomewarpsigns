@@ -123,7 +123,7 @@ public class WarpSigns implements Listener {
 		player.sendMessage(ChatColor.RED + plugin.myLocale().warpserrorNoPerm);
 		return;
 	    }
-	    plugin.getLogger().info("DEBUG: has permission");
+	    //plugin.getLogger().info("DEBUG: has permission");
 	    // Check if the player already has a sign
 	    final Location oldSignLoc = getWarp(player.getUniqueId());
 	    if (oldSignLoc == null) {
@@ -222,10 +222,10 @@ public class WarpSigns implements Listener {
 	for (String s : temp.keySet()) {
 	    try {
 		UUID playerUUID = UUID.fromString(s);
-		plugin.getLogger().info("DEBUG: Player UUID =  " + playerUUID);
-		plugin.getLogger().info("DEBUG: text loc = " + (String) temp.get(s));
+		//plugin.getLogger().info("DEBUG: Player UUID =  " + playerUUID);
+		//plugin.getLogger().info("DEBUG: text loc = " + (String) temp.get(s));
 		Location l = Util.getLocationString((String) temp.get(s));
-		plugin.getLogger().info("DEBUG: Loading warp at " + l);
+		//plugin.getLogger().info("DEBUG: Loading warp at " + l);
 		Block b = l.getBlock();
 		// Check that a warp sign is still there
 		if (b.getType().equals(Material.SIGN_POST) || b.getType().equals(Material.WALL_SIGN)) {

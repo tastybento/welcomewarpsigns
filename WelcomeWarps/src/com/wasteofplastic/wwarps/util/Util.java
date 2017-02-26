@@ -211,7 +211,7 @@ public class Util {
 	if (parts.length == 4) {
 	    final World w = Bukkit.getServer().getWorld(parts[0]);
 	    if (w == null) {
-		plugin.getLogger().info("DEBUG: world is null");
+		//plugin.getLogger().info("DEBUG: world is null");
 		return null;
 	    }
 	    final int x = Integer.parseInt(parts[1]);
