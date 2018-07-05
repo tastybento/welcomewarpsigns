@@ -29,7 +29,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import com.wasteofplastic.wwarps.WWarps;
 
 public class JoinLeaveEvents implements Listener {
-    private WWarps plugin;
+    private final WWarps plugin;
 
     public JoinLeaveEvents(WWarps plugin) {
 	this.plugin = plugin;
@@ -48,18 +48,15 @@ public class JoinLeaveEvents implements Listener {
 	final List<String> messages = plugin.getMessages().getMessages(playerUUID);
 	if (messages != null) {
 	    // plugin.getLogger().info("DEBUG: Messages waiting!");
-	    plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
-		@Override
-		public void run() {
-		    player.sendMessage(ChatColor.AQUA + plugin.myLocale().newsHeadline);
-		    int i = 1;
-		    for (String message : messages) {
-			player.sendMessage(i++ + ": " + message);
-		    }
-		    // Clear the messages
-		    plugin.getMessages().clearMessages(playerUUID);
-		}
-	    }, 40L);
+	    plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
+            player.sendMessage(ChatColor.AQUA + plugin.myLocale().newsHeadline);
+            int i = 1;
+            for (String message : messages) {
+            player.sendMessage(i++ + ": " + message);
+            }
+            // Clear the messages
+            plugin.getMessages().clearMessages(playerUUID);
+        }, 40L);
 	} // else {
 	// plugin.getLogger().info("no messages");
 	// }

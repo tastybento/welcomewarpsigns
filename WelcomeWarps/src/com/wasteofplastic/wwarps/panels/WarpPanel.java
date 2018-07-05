@@ -21,22 +21,22 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.wasteofplastic.wwarps.WWarps;
 
 public class WarpPanel implements Listener {
-    private WWarps plugin;
-    private List<Inventory> warpPanel;
-    private Map<UUID, ItemStack> headCache;
+    private final WWarps plugin;
+    private final List<Inventory> warpPanel;
+    private final Map<UUID, ItemStack> signpostCache;
 
     /**
      * @param plugin
      */
     public WarpPanel(WWarps plugin) {
         this.plugin = plugin;
-        warpPanel = new ArrayList<Inventory>();
-        headCache = new HashMap<UUID, ItemStack>();
+        warpPanel = new ArrayList<>();
+        signpostCache = new HashMap<>();
         updatePanel();
     }
 
@@ -48,19 +48,15 @@ public class WarpPanel implements Listener {
         int panelSize = 45; // Must be a multiple of 9
         // Create the warp panels
         Collection<UUID> warps = plugin.getWarpSignsListener().listSortedWarps();
-        //plugin.getLogger().info("DEBUG: warps size = " + warps.size());
         int panelNumber = warps.size() / (panelSize-2);
         int remainder = (warps.size() % (panelSize-2)) + 8 + 2;
         remainder -= (remainder % 9);
-        //plugin.getLogger().info("DEBUG: panel number = " + panelNumber + " remainder = " + remainder);
-        int i = 0;
+        int i;
         // TODO: Make panel title a string
         for (i = 0; i < panelNumber; i++) {
-            //plugin.getLogger().info("DEBUG: created panel " + (i+1));
             warpPanel.add(Bukkit.createInventory(null, panelSize, plugin.myLocale().warpsTitle + " #" + (i+1)));
         }
         // Make the last panel
-        //plugin.getLogger().info("DEBUG: created panel " + (i+1));
         warpPanel.add(Bukkit.createInventory(null, remainder, plugin.myLocale().warpsTitle + " #" + (i+1)));
         panelNumber = 0;
         int slot = 0;
@@ -71,40 +67,32 @@ public class WarpPanel implements Listener {
             // Make a head if the player is known
             String playerName = plugin.getServer().getOfflinePlayer(playerUUID).getName();
             if (playerName != null) {
-                ItemStack playerSkull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-                if (headCache.containsKey(playerUUID)) {
-                    playerSkull = headCache.get(playerUUID);
-                    //plugin.getLogger().info("DEBUG: Head found in cache");
+                ItemStack playerSign = new ItemStack(Material.SIGN);
+                if (signpostCache.containsKey(playerUUID)) {
+                    playerSign = signpostCache.get(playerUUID);
                 } else {
-                    //plugin.getLogger().info("DEBUG: Head not found in cache");
-                    SkullMeta meta = (SkullMeta) playerSkull.getItemMeta();
-                    meta.setOwner(playerName);
+                    ItemMeta meta = playerSign.getItemMeta();
                     meta.setDisplayName(playerName);
                     //get the sign info
                     Location signLocation = plugin.getWarpSignsListener().getWarp(playerUUID);
-                    //plugin.getLogger().info("DEBUG: " + playerName + ": block type = " + signLocation.getBlock().getType());
                     if (signLocation.getBlock().getType().equals(Material.SIGN_POST) || signLocation.getBlock().getType().equals(Material.WALL_SIGN)) {
                         Sign sign = (Sign)signLocation.getBlock().getState();
-                        List<String> lines = new ArrayList<String>(Arrays.asList(sign.getLines()));
+                        List<String> lines = new ArrayList<>(Arrays.asList(sign.getLines()));
                         meta.setLore(lines);
-                        //plugin.getLogger().info("DEBUG: " + playerName + ": lines = " + lines);
-                    } 
-                    playerSkull.setItemMeta(meta);
-                    headCache.put(playerUUID, playerSkull);
+                    }
+                    playerSign.setItemMeta(meta);
+                    signpostCache.put(playerUUID, playerSign);
                 }
                 // Add item to the panel
-                //plugin.getLogger().info("DEBUG: adding item to panel number = " + panelNumber + " slot = " + slot);
-                CPItem newButton = new CPItem(playerSkull, "wwarp " + playerName);
+                CPItem newButton = new CPItem(playerSign, "wwarp " + playerName);
                 warpPanel.get(panelNumber).setItem(slot++, newButton.getItem());
             } else {
                 // Just make a blank space
-                //warpPanel.get(panelNumber).setItem(slot, new ItemStack(Material.AIR));
-                // TEST CODE
-                ItemStack playerSkull = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-                SkullMeta meta = (SkullMeta) playerSkull.getItemMeta();
+                ItemStack playerSign = new ItemStack(Material.SIGN);
+                ItemMeta meta = playerSign.getItemMeta();
                 meta.setDisplayName("#" + count);
-                playerSkull.setItemMeta(meta);
-                warpPanel.get(panelNumber).setItem(slot++,playerSkull);
+                playerSign.setItemMeta(meta);
+                warpPanel.get(panelNumber).setItem(slot++,playerSign);
             }
             // Check if the panel is full
             if (slot == panelSize-2) {
@@ -116,7 +104,7 @@ public class WarpPanel implements Listener {
                 // Move onto the next panel
                 panelNumber++;
                 slot = 0;
-            } 
+            }
         }
         if (remainder != 0 && panelNumber > 0) {
             warpPanel.get(panelNumber).setItem(slot++, new CPItem(Material.SIGN,plugin.myLocale().warpsPrevious,"warps " + (panelNumber-1),"").getItem());
@@ -124,7 +112,6 @@ public class WarpPanel implements Listener {
     }
 
     public Inventory getWarpPanel(int panelNumber) {
-        //makePanel();
         if (panelNumber < 0) {
             panelNumber = 0;
         } else if (panelNumber > warpPanel.size()-1) {
@@ -148,20 +135,16 @@ public class WarpPanel implements Listener {
             return;
         }
         ItemStack clicked = event.getCurrentItem(); // The item that was clicked
-        //plugin.getLogger().info("DEBUG: inventory size = " + inventory.getSize());
-        //plugin.getLogger().info("DEBUG: clicked = " + clicked);
-        //plugin.getLogger().info("DEBUG: rawslot = " + event.getRawSlot());
         if (event.getRawSlot() >= event.getInventory().getSize() || clicked.getType() == Material.AIR) {
             return;
         }
-        int panelNumber = 0;
+        int panelNumber;
         try {
             panelNumber = Integer.valueOf(title.substring(title.indexOf('#')+ 1));
         } catch (Exception e) {
             panelNumber = 0;
         }
         String command = clicked.getItemMeta().getDisplayName();
-        //plugin.getLogger().info("DEBUG: command = " + command);
         if (command != null) {
             if (command.equalsIgnoreCase(plugin.myLocale().warpsNext)) {
                 player.closeInventory();

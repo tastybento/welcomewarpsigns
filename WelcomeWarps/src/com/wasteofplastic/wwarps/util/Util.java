@@ -20,7 +20,7 @@ import com.wasteofplastic.wwarps.WWarps;
  * 
  */
 public class Util {
-    private static WWarps plugin = WWarps.getPlugin();
+    private static final WWarps plugin = WWarps.getPlugin();
 
     /**
      * Loads a YAML file and if it does not exist it is looked for in the JAR
@@ -87,9 +87,9 @@ public class Util {
      * @return List containing the colored lines
      */
     public static List<String> chop(ChatColor color, String longLine, int length) {
-	List<String> result = new ArrayList<String>();
+	List<String> result = new ArrayList<>();
 	// int multiples = longLine.length() / length;
-	int i = 0;
+	int i;
 	for (i = 0; i < longLine.length(); i += length) {
 	    // for (int i = 0; i< (multiples*length); i += length) {
 	    int endIndex = Math.min(i + length, longLine.length());
@@ -178,21 +178,21 @@ public class Util {
     public static String prettifyText(String ugly) {
 	if (!ugly.contains("_") && (!ugly.equals(ugly.toUpperCase())))
 	    return ugly;
-	String fin = "";
+	StringBuilder fin = new StringBuilder();
 	ugly = ugly.toLowerCase();
 	if (ugly.contains("_")) {
 	    String[] splt = ugly.split("_");
 	    int i = 0;
 	    for (String s : splt) {
 		i += 1;
-		fin += Character.toUpperCase(s.charAt(0)) + s.substring(1);
+		fin.append(Character.toUpperCase(s.charAt(0))).append(s.substring(1));
 		if (i < splt.length)
-		    fin += " ";
+		    fin.append(" ");
 	    }
 	} else {
-	    fin += Character.toUpperCase(ugly.charAt(0)) + ugly.substring(1);
+	    fin.append(Character.toUpperCase(ugly.charAt(0))).append(ugly.substring(1));
 	}
-	return fin;
+	return fin.toString();
     }
 
     /**
@@ -204,7 +204,7 @@ public class Util {
      * @return Location
      */
     static public Location getLocationString(final String s) {
-	if (s == null || s.trim() == "") {
+	if (s == null || s.trim().equals("")) {
 	    return null;
 	}
 	final String[] parts = s.split(":");
@@ -256,7 +256,7 @@ public class Util {
 	 * @return
 	 */
 	public static List<String> tabLimit(final List<String> list, final String start) {
-	final List<String> returned = new ArrayList<String>();
+	final List<String> returned = new ArrayList<>();
 	for (String s : list) {
 	if (s.toLowerCase().startsWith(start.toLowerCase())) {
 		returned.add(s);

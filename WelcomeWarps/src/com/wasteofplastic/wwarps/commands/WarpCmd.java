@@ -42,13 +42,12 @@ import com.wasteofplastic.wwarps.WWarps;
 import com.wasteofplastic.wwarps.util.Util;
 
 public class WarpCmd implements CommandExecutor, TabCompleter {
-    private WWarps plugin;
+    private final WWarps plugin;
     private Sound batTakeOff;
     /**
      * Constructor
      * 
      * @param aSkyBlock
-     * @param players
      */
     public WarpCmd(WWarps aSkyBlock) {
         // Plugin instance
@@ -101,7 +100,7 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
                         return true;
                     } else {
                         // Try the warp panel
-                        int panelNum = 0;
+                        int panelNum;
                         try {
                             panelNum = Integer.valueOf(split[0]) - 1;
                         } catch (Exception e) {
@@ -123,12 +122,12 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
                             player.openInventory(plugin.getWarpPanel().getWarpPanel(0));
                         } else {
                             Boolean hasWarp = false;
-                            String wlist = "";
+                            StringBuilder wlist = new StringBuilder();
                             for (UUID w : warpList) {
-                                if (wlist.isEmpty()) {
-                                    wlist = plugin.getServer().getOfflinePlayer(w).getName();
+                                if (wlist.length() == 0) {
+                                    wlist = new StringBuilder(plugin.getServer().getOfflinePlayer(w).getName());
                                 } else {
-                                    wlist += ", " + plugin.getServer().getOfflinePlayer(w).getName();
+                                    wlist.append(", ").append(plugin.getServer().getOfflinePlayer(w).getName());
                                 }
                                 if (w.equals(playerUUID)) {
                                     hasWarp = true;
@@ -255,7 +254,7 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(final CommandSender sender, final Command command, final String label, final String[] args) {
-        final List<String> options = new ArrayList<String>();
+        final List<String> options = new ArrayList<>();
         if (!(sender instanceof Player)) {
             //plugin.getLogger().info("DEBUG: not a player");
             return options;

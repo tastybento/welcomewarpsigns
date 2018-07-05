@@ -48,7 +48,7 @@ import com.wasteofplastic.wwarps.util.Util;
 public class WarpSigns implements Listener {
     private final WWarps plugin;
     // Map of all warps stored as player, warp sign Location
-    private HashMap<UUID, Location> warpList = new HashMap<UUID, Location>();
+    private final HashMap<UUID, Location> warpList;
     // Where warps are stored
     private YamlConfiguration welcomeWarps;
 
@@ -57,7 +57,7 @@ public class WarpSigns implements Listener {
      */
     public WarpSigns(WWarps plugin) {
 	this.plugin = plugin;
-	this.warpList = new HashMap<UUID, Location>();
+	this.warpList = new HashMap<>();
     }
 
     /**
@@ -184,7 +184,7 @@ public class WarpSigns implements Listener {
 	    return;
 	}
 	//plugin.getLogger().info("Saving warps...");
-	final HashMap<String, Object> warps = new HashMap<String, Object>();
+	final HashMap<String, Object> warps = new HashMap<>();
 	for (UUID p : warpList.keySet()) {
 	    warps.put(p.toString(), Util.getStringLocation(warpList.get(p)));
 	}
@@ -195,12 +195,7 @@ public class WarpSigns implements Listener {
 	if (reloadPanel) {
 	    // This is not done on shutdown
 	    if (plugin.getWarpPanel() != null) {
-		plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
-
-		    @Override
-		    public void run() {
-			plugin.getWarpPanel().updatePanel();
-		    }});
+		plugin.getServer().getScheduler().runTask(plugin, () -> plugin.getWarpPanel().updatePanel());
 	    }
 	}
 	//plugin.getLogger().info("End of saving warps");
@@ -331,12 +326,11 @@ public class WarpSigns implements Listener {
      */
     public Collection<UUID> listSortedWarps() {
 	// Bigger value of time means a more recent login
-	TreeMap<Long, UUID> map = new TreeMap<Long, UUID>();
+	TreeMap<Long, UUID> map = new TreeMap<>();
 	for (UUID uuid : warpList.keySet()) {
 	    map.put(plugin.getServer().getOfflinePlayer(uuid).getLastPlayed(), uuid);
 	}
-	Collection<UUID> result = map.descendingMap().values();
-	return result;
+		return map.descendingMap().values();
     }
     /**
      * Provides the location of the warp for player or null if one is not found
@@ -346,11 +340,7 @@ public class WarpSigns implements Listener {
      * @return Location of warp
      */
     public Location getWarp(UUID player) {
-	if (warpList.containsKey(player)) {
-	    return warpList.get(player);
-	} else {
-	    return null;
-	}
+		return warpList.getOrDefault(player, null);
     }
 
     /**

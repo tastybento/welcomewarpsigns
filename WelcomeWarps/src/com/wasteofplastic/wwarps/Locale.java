@@ -35,7 +35,7 @@ public class Locale {
     // Localization Strings
     private FileConfiguration locale = null;
     private File localeFile = null;
-    private WWarps plugin;
+    private final WWarps plugin;
 
     public String errorUnknownPlayer;
     public String errorNoPermission;

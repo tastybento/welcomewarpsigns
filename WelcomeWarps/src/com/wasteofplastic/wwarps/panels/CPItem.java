@@ -32,12 +32,11 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class CPItem {
 
-    private ItemStack item;
-    private String command;
+    private final ItemStack item;
+    private final String command;
     private String nextSection;
 
     /**
-     * @param item
      * @param material
      * @param name
      * @param command
@@ -49,7 +48,7 @@ public class CPItem {
 	item = new ItemStack(material);
 	ItemMeta meta = item.getItemMeta();
 	// Handle multi line names (split by |)
-	List<String> desc = new ArrayList<String>(Arrays.asList(name.split("\\|")));
+	List<String> desc = new ArrayList<>(Arrays.asList(name.split("\\|")));
 	meta.setDisplayName(desc.get(0));
 	if (desc.size() > 1) {
 	    desc.remove(0); // Remove the name
@@ -64,7 +63,7 @@ public class CPItem {
 	this.item = itemStack;
 	ItemMeta meta = item.getItemMeta();
 	// Handle multi line names (split by |)
-	List<String> desc = new ArrayList<String>(Arrays.asList(name.split("\\|")));
+	List<String> desc = new ArrayList<>(Arrays.asList(name.split("\\|")));
 	meta.setDisplayName(desc.get(0));
 	if (desc.size() > 1) {
 	    desc.remove(0); // Remove the name

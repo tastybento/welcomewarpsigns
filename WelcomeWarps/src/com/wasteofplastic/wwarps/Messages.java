@@ -1,10 +1,6 @@
 package com.wasteofplastic.wwarps;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -18,9 +14,9 @@ import com.wasteofplastic.wwarps.util.Util;
  * 
  */
 public class Messages {
-    private WWarps plugin;
+    private final WWarps plugin;
     // Offline Messages
-    private HashMap<UUID, List<String>> messages = new HashMap<UUID, List<String>>();
+    private final HashMap<UUID, List<String>> messages = new HashMap<>();
     private YamlConfiguration messageStore;
 
     
@@ -38,8 +34,7 @@ public class Messages {
      * @return
      */
     public List<String> getMessages(UUID playerUUID) {
-	List<String> playerMessages = messages.get(playerUUID);
-	return playerMessages;
+		return messages.get(playerUUID);
     }
 
     /**
@@ -58,17 +53,15 @@ public class Messages {
 	plugin.getLogger().info("Saving offline messages...");
 	try {
 	    // Convert to a serialized string
-	    final HashMap<String, Object> offlineMessages = new HashMap<String, Object>();
+	    final HashMap<String, Object> offlineMessages = new HashMap<>();
 	    for (UUID p : messages.keySet()) {
 		offlineMessages.put(p.toString(), messages.get(p));
 	    }
 	    // Convert to YAML
 	    messageStore.set("messages", offlineMessages);
 	    Util.saveYamlFile(messageStore, "messages.yml");
-	    return;
 	} catch (Exception e) {
 	    e.printStackTrace();
-	    return;
 	}
     }
 
@@ -119,7 +112,6 @@ public class Messages {
     /**
      * Sets a message for the player to receive next time they login
      * 
-     * @param player
      * @param message
      * @return true if player is offline, false if online
      */
@@ -139,7 +131,7 @@ public class Messages {
 	if (playerMessages != null) {
 	    playerMessages.add(message);
 	} else {
-	    playerMessages = new ArrayList<String>(Arrays.asList(message));
+	    playerMessages = new ArrayList<>(Collections.singletonList(message));
 	}
 	put(playerUUID, playerMessages);
 	return true;
