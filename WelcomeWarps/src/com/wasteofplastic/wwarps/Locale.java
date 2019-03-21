@@ -183,13 +183,13 @@ public class Locale {
 	warpsTitle = ChatColor.translateAlternateColorCodes('&', locale.getString("warps.title", "Island warps"));
 	errorerrorYouDoNotHavePermission = ChatColor.translateAlternateColorCodes('&',
 		locale.getString("error.errorYouDoNotHavePermission", "You do not have permission to use that command!"));
-	warphelpWarps = ChatColor.translateAlternateColorCodes('&', locale.getString("warp.helpWarps", "Lists all available welcome-sign warps."));
-	warphelpWarp = ChatColor.translateAlternateColorCodes('&', locale.getString("warp.helpWarp", "Warp to <player>'s welcome sign."));
+	warphelpWarps = ChatColor.translateAlternateColorCodes('&', locale.getString("warps.helpWarps", "Lists all available welcome-sign warps."));
+	warphelpWarp = ChatColor.translateAlternateColorCodes('&', locale.getString("warps.helpWarp", "Warp to <player>'s welcome sign."));
 	errorerrorInvalidPlayer = ChatColor.translateAlternateColorCodes('&',
 		locale.getString("island.errorInvalidPlayer", "That player is invalid or does not have an island!"));
 	reloadconfigReloaded = ChatColor.translateAlternateColorCodes('&',
 		locale.getString("reload.configReloaded", "Configuration reloaded from file."));
-	helpColor = ChatColor.translateAlternateColorCodes('&', locale.getString("warp.helpColor", "&e"));
+	helpColor = ChatColor.translateAlternateColorCodes('&', locale.getString("warps.helpColor", "&e"));
 	errorUseInGame = ChatColor.translateAlternateColorCodes('&', locale.getString("error.useInGame", "This command must be used in-game."));
 	adminHelpHelp = ChatColor.translateAlternateColorCodes('&', locale.getString("adminHelp.help", "Warp Sign Admin"));
 	adminHelpreload = ChatColor.translateAlternateColorCodes('&', locale.getString("adminHelp.reload", "reload plugin settings"));
